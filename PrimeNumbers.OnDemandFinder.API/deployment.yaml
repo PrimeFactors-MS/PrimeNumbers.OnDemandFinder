@@ -1,0 +1,39 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: on-demand-finder-service
+  labels:
+    app: on-demand-finder-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 30005
+    targetPort: 80
+    nodePort: 30015
+  selector:
+    app: on-demand-finder
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: on-demand-finder
+spec:
+  selector:
+    matchLabels:
+      app: on-demand-finder
+  template:
+    metadata:
+      labels:
+        app: on-demand-finder
+        project: prime-numbers
+    spec:
+      containers:
+      - name: on-demand-finder
+        image: on-demand-finder:v1
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
