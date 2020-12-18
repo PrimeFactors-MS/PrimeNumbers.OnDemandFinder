@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["PrimeNumbers.OnDemandFinder.API/PrimeNumbers.OnDemandFinder.API.csproj", "PrimeNumbers.OnDemandFinder.API/"]
+COPY ["NuGet.Config", "."]
 RUN dotnet restore "PrimeNumbers.OnDemandFinder.API/PrimeNumbers.OnDemandFinder.API.csproj"
 COPY . .
 WORKDIR "/src/PrimeNumbers.OnDemandFinder.API"
